@@ -1,0 +1,20 @@
+# Base Windows Image -  Working with latest DevOps cached imaged
+FROM mcr.microsoft.com/windows/servercore@sha256:39ba615d7a739fcdd9fc95b97882672d5af7d0861dd16b51b238c822765d2b8d
+ 
+# Change to Root Dir
+WORKDIR /
+ 
+# Copy InstallShield installer to root (must be the standalonebuild version >= 2019R3)
+ADD InstallShield2019R3StandaloneBuild.exe /
+ 
+# InstallShield installation
+RUN InstallShield2019R3StandaloneBuild.exe /s /v"INSTALLLEVEL=101 SABCONTAINER=1 /qn"
+
+# Create the docker volume bound folder (this folder shall be paired to the volume)
+RUN mkdir "C:/InstallerBuildFiles"
+
+# Add the powershell script
+ADD runIS.ps1 /
+
+# Execute Installer Build
+CMD ["powershell.exe", "-File", "runIS.ps1"]
