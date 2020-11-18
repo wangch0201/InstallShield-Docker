@@ -5,10 +5,10 @@ FROM mcr.microsoft.com/windows/servercore@sha256:39ba615d7a739fcdd9fc95b97882672
 WORKDIR /
  
 # Copy InstallShield installer to root (must be the standalonebuild version >= 2019R3)
-ADD InstallShield2019R3StandaloneBuild.exe /
+ADD InstallShield2020R2StandaloneBuild.exe /
  
 # InstallShield installation
-RUN InstallShield2019R3StandaloneBuild.exe /s /v"INSTALLLEVEL=101 SABCONTAINER=1 /qn"
+RUN InstallShield2020R2StandaloneBuild.exe /s /v"INSTALLLEVEL=101 SABCONTAINER=1 /qn"
 
 # Create the docker volume bound folder (this folder shall be paired to the volume)
 RUN mkdir "C:/InstallerBuildFiles"
